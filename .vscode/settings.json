@@ -1,0 +1,7 @@
+{
+  "git.ignoreLimitWarning": true,
+  "git.enabled": true,
+  "git.enableSmartCommit": true,
+  "git.enableCommitSigning": false,
+  "git.enableStatusBarSync": true
+}
