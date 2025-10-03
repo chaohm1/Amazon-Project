@@ -64,6 +64,13 @@ products.forEach((product) => {
       cart.push({
       productid: productid,
       quantity: 1
-    });}
+    });
+  }
+    let totalQuantity = 0;
+    cart.forEach((item) => {
+      totalQuantity += item.quantity;
     })
-  })
+    document.querySelector('.js-cart-quantity')
+    .innerHTML = totalQuantity;
+    });
+  });
