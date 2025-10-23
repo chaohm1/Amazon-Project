@@ -1,6 +1,7 @@
 import {cart, removeFromCart} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
+dayjs();
 let cartSummaryHTML = '';
 cart.forEach((cartItem) => {
   if(!cartItem) return;
