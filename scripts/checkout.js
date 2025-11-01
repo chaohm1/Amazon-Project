@@ -1,15 +1,12 @@
-import {cart, removeFromCart} from '../data/cart.js';
+import {cart, removeFromCart, updateDeliveryOption} from '../data/cart.js';
 import {products} from '../data/products.js';
 import {formatCurrency} from './utils/money.js';
 import  dayjs from 'https://unpkg.com/supersimpledev@8.5.0/dayjs/esm/index.js';
 import {deliveryOptions} from '../data/deliveryOptions.js';
 
 
-const today = dayjs();
-const deliveryDate = today.add(7, 'days');
-deliveryDate.format('dddd, MMMM D');
-
-let cartSummaryHTML = '';
+function renderOrderSumarry(){
+  let cartSummaryHTML = '';
 cart.forEach((cartItem) => {
   let productId = cartItem.id;
 
@@ -29,9 +26,7 @@ cart.forEach((cartItem) => {
       deliveryOption = option;
     }
 
-  });
-
-  
+  }); 
   const today = dayjs();
   const deliveryDate = today.add(deliveryOption.deliveryDays,
     'days');
@@ -82,20 +77,23 @@ cart.forEach((cartItem) => {
 
 function deliveryOptionhtml(matchingProduct, cartItem){
   let html = '';
- deliveryOptions.forEach((deliveryOptions) => {
+ deliveryOptions.forEach((option) => {
   const today = dayjs();
-  const deliveryDate = today.add(deliveryOptions.deliveryDays,
+  const deliveryDate = today.add(option.deliveryDays,
     'days');
   const dateString = deliveryDate.format('dddd, MMMM D');
 
 
-  const priceString = deliveryOptions.priceCents === 0
+  const priceString = option.priceCents === 0
   ? 'FREE'
-  : `$${formatCurrency(deliveryOptions.priceCents)} -`;
+  : `$${formatCurrency(option.priceCents)} -`;
 
-  const isChecked = deliveryOptions.id === cartItem.deliveryOption;
+  const isChecked = option.id === cartItem.deliveryOption;
 html += `
-                <div class="delivery-option">
+                <div class="delivery-option js-delivery-option"
+                data-product-id="${matchingProduct.id}"
+                data-delivery-option="${option.id}"
+                >
                   <input type="radio"
                    ${isChecked ? 'checked' : ''}
                     class="delivery-option-input"
@@ -128,3 +126,15 @@ document.querySelectorAll('.js-delete-link').forEach((link) =>{
     container.remove();
   });
 });
+
+
+document.querySelectorAll('.js-delivery-option').forEach((element) => {
+  element.addEventListener('click', () => {
+   const {productId, deliveryOption} = element.dataset;
+   updateDeliveryOption(productId, deliveryOption);
+   renderOrderSumarry();
+  });
+});
+}
+
+renderOrderSumarry();
