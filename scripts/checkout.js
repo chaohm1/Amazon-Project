@@ -5,16 +5,18 @@ import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import {loadProducts} from '../data/products.js';
 
 
-/*new Promise((resolve) => {
+
+async function initializeCheckout() {
+ await new Promise((resolve) => {
     loadProducts(() => {
         resolve();
     });
-}).then(() => {
+});
     renderOrderSumarry();
     renderPaymentSummary(); 
-});*/
-
-Promise.all([
+}
+initializeCheckout();
+/*Promise.all([
     new Promise((resolve) => {
     loadProducts(() => {
         resolve();
@@ -23,4 +25,4 @@ Promise.all([
 ]).then(() => {
     renderOrderSumarry();
     renderPaymentSummary();
-});
+});*/

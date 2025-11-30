@@ -8,9 +8,9 @@ import {renderPaymentSummary} from './paymentSummary.js';
 export function renderOrderSumarry(){
   let cartSummaryHTML = '';
 cart.forEach((cartItem) => {
-  let productId = cartItem.id;
+  let productid = cartItem.productId;
 
-  let matchingProduct = getProduct(productId);
+  let matchingProduct = getProduct(productid);
   
   
   const deliveryOptionId = cartItem.deliveryOption;
